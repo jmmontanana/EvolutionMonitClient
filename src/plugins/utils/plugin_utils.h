@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2015 University of Stuttgart
+ * Copyright (C) 2015-2017 University of Stuttgart
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,20 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+#ifndef _PLUGIN_UTILS_H
+#define _PLUGIN_UTILS_H
 
-#ifndef PUBLISHER_H_
-#define PUBLISHER_H_
+#define MAX_EVENTS_NUMBER 32
+#define MAX_EVENTS_LEN 32
+#define JSON_MAX_LEN 1024
 
-int query_json(char *URL, char *response);
-
-/**
- * @brief Sends the data defined in message to the given URL via cURL.
+/** @brief data structure to store plugin metrics
  *
- * @return 1 if successful; 0 otherwise
+ * The data structure holds the metric names including the correspond
+ * measured values. Moreover, the number of events measured is stored.
  */
-int publish_json(char *URL, char *message);
+typedef struct Plugin_metrics_t
+{
+    char *events[MAX_EVENTS_NUMBER];
+    float values[MAX_EVENTS_NUMBER];
+    int num_events;
+} Plugin_metrics;
 
-int publish_file(char *URL, char *static_string, char *filename);
-
-int create_new_experiment(char *URL, char *message, char *experiment_id);
-#endif
+#endif /* _PLUGIN_UTILS_H */
